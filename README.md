@@ -1,6 +1,6 @@
 # wtmux
 
-A Windows-native terminal multiplexer written in Rust. Inspired by tmux, built entirely on Windows APIs (ConPTY, Named Pipes) - no WSL, no Cygwin required.
+A Windows-native terminal multiplexer — [tmux](https://github.com/tmux/tmux) rewritten in Rust. The core concepts, key bindings, and command interface are ported from tmux, rebuilt entirely on Windows APIs (ConPTY, Named Pipes) — no WSL, no Cygwin required.
 
 ```
 Client (wtmux-client.exe)       Server (wtmux-server.exe)
