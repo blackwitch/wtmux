@@ -1,0 +1,10 @@
+[package]
+name = "wtmux-terminal"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+vte = { workspace = true }
+unicode-width = { workspace = true }
+serde = { workspace = true }
+tracing = { workspace = true }

@@ -1,0 +1,18 @@
+[package]
+name = "wtmux-client"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "wtmux client - Windows terminal multiplexer"
+
+[dependencies]
+wtmux-common = { path = "../wtmux-common" }
+wtmux-config = { path = "../wtmux-config" }
+tokio = { workspace = true }
+crossterm = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }
+bincode = { workspace = true }
+clap = { workspace = true }

@@ -1,0 +1,27 @@
+{
+    "version": "0.1.0",
+    "description": "Windows terminal multiplexer using ConPTY",
+    "homepage": "https://github.com/petermn2/wtmux",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/petermn2/wtmux/releases/download/v0.1.0/wtmux-v0.1.0-x86_64-pc-windows-msvc.zip",
+            "hash": ""
+        }
+    },
+    "bin": [
+        [
+            "wtmux-client.exe",
+            "wtmux"
+        ],
+        "wtmux-server.exe"
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/petermn2/wtmux/releases/download/v$version/wtmux-v$version-x86_64-pc-windows-msvc.zip"
+            }
+        }
+    }
+}

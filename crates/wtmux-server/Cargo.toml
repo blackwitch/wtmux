@@ -1,0 +1,19 @@
+[package]
+name = "wtmux-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "wtmux server - Windows terminal multiplexer daemon"
+
+[dependencies]
+wtmux-common = { path = "../wtmux-common" }
+wtmux-pty = { path = "../wtmux-pty" }
+wtmux-terminal = { path = "../wtmux-terminal" }
+wtmux-layout = { path = "../wtmux-layout" }
+wtmux-config = { path = "../wtmux-config" }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }
+uuid = { workspace = true }

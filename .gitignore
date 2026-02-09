@@ -1,0 +1,9 @@
+/target
+**/*.pdb
+*.exe
+Cargo.lock
+.vs/
+.vscode/
+*.swp
+*.swo
+*~

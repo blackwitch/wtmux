@@ -1,0 +1,43 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/wtmux-server",
+    "crates/wtmux-client",
+    "crates/wtmux-common",
+    "crates/wtmux-pty",
+    "crates/wtmux-terminal",
+    "crates/wtmux-layout",
+    "crates/wtmux-config",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/petermn2/wtmux"
+description = "Windows terminal multiplexer using ConPTY"
+
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+windows-sys = { version = "0.59", features = [
+    "Win32_System_Console",
+    "Win32_System_Threading",
+    "Win32_System_Pipes",
+    "Win32_Security",
+    "Win32_Foundation",
+    "Win32_System_Memory",
+    "Win32_Storage_FileSystem",
+    "Win32_System_JobObjects",
+    "Win32_System_IO",
+] }
+crossterm = "0.28"
+vte = "0.13"
+serde = { version = "1", features = ["derive"] }
+bincode = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1"
+thiserror = "2"
+uuid = { version = "1", features = ["v4", "serde"] }
+unicode-width = "0.2"
+clap = { version = "4", features = ["derive"] }

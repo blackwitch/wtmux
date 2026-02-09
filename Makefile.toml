@@ -1,0 +1,54 @@
+# cargo-make task definitions for wtmux
+# Install: cargo install cargo-make
+# Run:     cargo make <task>
+
+[config]
+default_to_workspace = false
+
+[tasks.build]
+description = "Build all crates in debug mode"
+command = "cargo"
+args = ["build"]
+
+[tasks.release]
+description = "Build all crates in release mode"
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.test]
+description = "Run all tests"
+command = "cargo"
+args = ["test"]
+
+[tasks.install-local]
+description = "Build release and install to LOCALAPPDATA\\wtmux"
+script_runner = "powershell"
+script = ["& .\\install.ps1"]
+
+[tasks.uninstall-local]
+description = "Remove wtmux from LOCALAPPDATA\\wtmux"
+script_runner = "powershell"
+script = ["& .\\uninstall.ps1"]
+
+[tasks.package-zip]
+description = "Create release zip archive"
+dependencies = ["release"]
+script_runner = "powershell"
+script = [
+    "$version = (cargo metadata --no-deps --format-version 1 | ConvertFrom-Json).packages | Where-Object { $_.name -eq 'wtmux-client' } | Select-Object -ExpandProperty version",
+    "$archiveName = \"wtmux-v$version-x86_64-pc-windows-msvc\"",
+    "New-Item -ItemType Directory -Path \"dist/$archiveName\" -Force | Out-Null",
+    "Copy-Item target/release/wtmux-client.exe \"dist/$archiveName/wtmux-client.exe\"",
+    "Copy-Item target/release/wtmux-server.exe \"dist/$archiveName/wtmux-server.exe\"",
+    "Copy-Item LICENSE \"dist/$archiveName/\"",
+    "Compress-Archive -Path \"dist/$archiveName/*\" -DestinationPath \"dist/$archiveName.zip\" -Force",
+    "Write-Host \"Created dist/$archiveName.zip\" -ForegroundColor Green",
+]
+
+[tasks.install-cargo]
+description = "Install both binaries via cargo install"
+script_runner = "powershell"
+script = [
+    "cargo install --path crates/wtmux-client",
+    "cargo install --path crates/wtmux-server",
+]

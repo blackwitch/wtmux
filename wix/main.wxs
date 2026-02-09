@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    WiX v3 installer definition for wtmux
+    Build: candle.exe main.wxs && light.exe -ext WixUIExtension main.wixobj -o wtmux.msi
+    Or via cargo-wix: cargo wix
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+    <?define ProductVersion = "0.1.0" ?>
+    <?define ProductName = "wtmux" ?>
+    <?define Manufacturer = "wtmux contributors" ?>
+    <?define UpgradeCode = "F8A3B2C1-7D4E-4F5A-9B6C-1E2D3F4A5B6C" ?>
+
+    <Product
+        Id="*"
+        Name="$(var.ProductName)"
+        Version="$(var.ProductVersion)"
+        Manufacturer="$(var.Manufacturer)"
+        Language="1033"
+        UpgradeCode="$(var.UpgradeCode)">
+
+        <Package
+            InstallerVersion="450"
+            Compressed="yes"
+            InstallScope="perMachine"
+            Description="wtmux - Windows terminal multiplexer"
+            Comments="Windows terminal multiplexer using ConPTY" />
+
+        <MajorUpgrade
+            DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+            AllowSameVersionUpgrades="yes" />
+
+        <MediaTemplate EmbedCab="yes" />
+
+        <!-- Install directory -->
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFiles64Folder">
+                <Directory Id="INSTALLFOLDER" Name="wtmux" />
+            </Directory>
+        </Directory>
+
+        <!-- Binaries -->
+        <ComponentGroup Id="Binaries" Directory="INSTALLFOLDER">
+            <Component Id="ClientExe" Guid="A1B2C3D4-E5F6-7890-ABCD-EF1234567890" Win64="yes">
+                <File Id="WtmuxClientExe"
+                      Source="$(var.CargoTargetDir)\wtmux-client.exe"
+                      Name="wtmux-client.exe"
+                      KeyPath="yes" />
+                <!-- Convenience alias: wtmux.exe -> wtmux-client.exe -->
+                <CopyFile Id="WtmuxAlias"
+                          FileId="WtmuxClientExe"
+                          DestinationDirectory="INSTALLFOLDER"
+                          DestinationName="wtmux.exe" />
+            </Component>
+
+            <Component Id="ServerExe" Guid="B2C3D4E5-F6A7-8901-BCDE-F23456789012" Win64="yes">
+                <File Id="WtmuxServerExe"
+                      Source="$(var.CargoTargetDir)\wtmux-server.exe"
+                      Name="wtmux-server.exe"
+                      KeyPath="yes" />
+            </Component>
+
+            <!-- Add install dir to system PATH -->
+            <Component Id="PathEntry" Guid="C3D4E5F6-A7B8-9012-CDEF-345678901234" Win64="yes">
+                <Environment Id="PATH"
+                             Name="PATH"
+                             Value="[INSTALLFOLDER]"
+                             Permanent="no"
+                             Part="last"
+                             Action="set"
+                             System="yes" />
+            </Component>
+        </ComponentGroup>
+
+        <!-- Feature -->
+        <Feature Id="Complete" Title="wtmux" Level="1">
+            <ComponentGroupRef Id="Binaries" />
+        </Feature>
+
+        <!-- UI -->
+        <UIRef Id="WixUI_Minimal" />
+        <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\LICENSE.rtf" />
+
+    </Product>
+</Wix>

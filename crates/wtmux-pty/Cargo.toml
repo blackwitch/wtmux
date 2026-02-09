@@ -1,0 +1,11 @@
+[package]
+name = "wtmux-pty"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+windows-sys = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }

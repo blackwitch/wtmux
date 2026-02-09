@@ -1,0 +1,9 @@
+[package]
+name = "wtmux-layout"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+uuid = { workspace = true }
+serde = { workspace = true }
+tracing = { workspace = true }
