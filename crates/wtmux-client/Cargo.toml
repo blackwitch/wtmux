@@ -6,6 +6,10 @@ license.workspace = true
 repository.workspace = true
 description = "wtmux client - Windows terminal multiplexer"
 
+[[bin]]
+name = "wtmux"
+path = "src/main.rs"
+
 [dependencies]
 wtmux-common = { path = "../wtmux-common" }
 wtmux-config = { path = "../wtmux-config" }

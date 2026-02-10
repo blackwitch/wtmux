@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(C:/Users/Peter/.cargo/bin/cargo.exe build)"
+    ]
+  }
+}
