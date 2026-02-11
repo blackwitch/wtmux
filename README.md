@@ -303,6 +303,222 @@ Use in `status-left` and `status-right`:
 | `%m` | Month (01-12) |
 | `%d` | Day (01-31) |
 
+## tmux Compatibility
+
+wtmux aims to provide a tmux-compatible experience on Windows. Below is a comprehensive comparison of what is supported and what is not yet implemented.
+
+### Overall Coverage
+
+| Area | tmux Total | wtmux Supported | Coverage |
+|------|-----------|----------------|----------|
+| CLI Subcommands | ~80 | ~25 | ~31% |
+| Default Key Bindings | ~40 | ~22 | ~55% |
+| Copy Mode Keys | ~40 | ~15 | ~38% |
+| Configuration Options | 100+ | ~16 | ~15% |
+
+### CLI Subcommands — Sessions & Clients
+
+| tmux Command | Supported | Notes |
+|---|---|---|
+| `new-session` / `new` | ✅ | `-s`, `-c` options |
+| `attach-session` / `attach` / `a` | ✅ | `-t` option |
+| `list-sessions` / `ls` | ✅ | |
+| `kill-session` | ✅ | `-t` option |
+| `start-server` | ✅ | |
+| `kill-server` | ❌ | Not yet implemented |
+| `has-session` | ❌ | |
+| `list-clients` | ❌ | |
+| `list-commands` | ❌ | |
+| `lock-client` / `lock-server` / `lock-session` | ❌ | |
+| `refresh-client` | ❌ | |
+| `show-messages` | ❌ | |
+| `suspend-client` | ❌ | |
+| `switch-client` | ❌ | |
+
+### CLI Subcommands — Windows & Panes
+
+| tmux Command | Supported | Notes |
+|---|---|---|
+| `split-window` | ✅ | `-h`, `-v` flags |
+| `select-pane` | ✅ | `-U/-D/-L/-R`, `-t :.+` |
+| `resize-pane` | ✅ | `-U/-D/-L/-R N`, `-Z` (zoom) |
+| `kill-pane` | ✅ | |
+| `last-pane` | ✅ | |
+| `swap-pane` | ✅ | `-U`, `-D` |
+| `new-window` | ✅ | `-n` flag |
+| `select-window` | ✅ | `-t` flag |
+| `next-window` / `previous-window` | ✅ | |
+| `last-window` | ✅ | |
+| `rename-window` | ✅ | |
+| `kill-window` | ✅ | |
+| `next-layout` | ✅ | |
+| `copy-mode` | ✅ | `-u` flag |
+| `paste-buffer` | ✅ | |
+| `display-message` | ✅ | |
+| `break-pane` | ❌ | Break pane into its own window |
+| `capture-pane` | ❌ | Capture pane contents |
+| `join-pane` | ❌ | Join pane from another window |
+| `move-pane` / `move-window` | ❌ | |
+| `swap-window` | ❌ | |
+| `rotate-window` | ❌ | |
+| `link-window` / `unlink-window` | ❌ | |
+| `find-window` | ❌ | |
+| `list-panes` / `list-windows` | ❌ | |
+| `pipe-pane` | ❌ | Pipe pane output to a command |
+| `display-panes` | ❌ | Pane number overlay |
+| `previous-layout` / `select-layout` | ❌ | Only `next-layout` exists |
+| `resize-window` | ❌ | |
+| `respawn-pane` / `respawn-window` | ❌ | |
+| `choose-tree` / `choose-client` | ❌ | Interactive selection UI |
+| `send-keys` / `send-prefix` | ❌ | Critical for scripting |
+
+### Key Bindings & Options Commands
+
+| tmux Command | Supported | Notes |
+|---|---|---|
+| `bind-key` | ✅ | `-n` flag for no-prefix |
+| `unbind-key` | ✅ | |
+| `list-keys` | ✅ | |
+| `set-option` | ✅ | `-g` flag, ~16 options only |
+| `source-file` | ✅ | |
+| `send-keys` / `send-prefix` | ❌ | |
+| `set-window-option` (setw) | ❌ | |
+| `show-options` / `show-window-options` | ❌ | |
+
+### Buffer Commands
+
+| tmux Command | Supported | Notes |
+|---|---|---|
+| `paste-buffer` | ✅ | |
+| `choose-buffer` | ❌ | |
+| `list-buffers` | ❌ | |
+| `load-buffer` / `save-buffer` | ❌ | |
+| `set-buffer` / `delete-buffer` / `show-buffer` / `clear-history` | ❌ | |
+
+### Other Commands
+
+| tmux Command | Supported | Notes |
+|---|---|---|
+| `clock-mode` | ✅ | |
+| `command-prompt` | ✅ | Basic only (tmux `-I`, `-p` etc. not supported) |
+| `confirm-before` | ❌ | |
+| `display-menu` / `display-popup` | ❌ | |
+| `if-shell` | ❌ | Conditional execution |
+| `run-shell` | ❌ | External command execution |
+| `wait-for` | ❌ | Synchronization channels |
+| `set-environment` / `show-environment` | ❌ | |
+
+### Default Key Bindings
+
+| Key | tmux Action | Supported |
+|---|---|---|
+| `C-b "` | split-window (vertical) | ✅ |
+| `C-b %` | split-window -h | ✅ |
+| `C-b &` | kill-window | ✅ |
+| `C-b ,` | rename-window | ✅ |
+| `C-b $` | rename-session | ✅ |
+| `C-b 0-9` | select-window | ✅ |
+| `C-b c` | new-window | ✅ |
+| `C-b d` | detach-client | ✅ |
+| `C-b n` / `C-b p` | next/prev window | ✅ |
+| `C-b l` | last-window | ✅ |
+| `C-b o` | select next pane | ✅ |
+| `C-b ;` | last-pane | ✅ |
+| `C-b x` | kill-pane | ✅ |
+| `C-b z` | resize-pane -Z (zoom) | ✅ |
+| `C-b {` / `C-b }` | swap-pane | ✅ |
+| `C-b Space` | next-layout | ✅ |
+| `C-b [` / `C-b ]` | copy-mode / paste | ✅ |
+| `C-b :` | command-prompt | ✅ |
+| `C-b ?` | list-keys | ✅ |
+| `C-b t` | clock-mode | ✅ |
+| `C-b w` | choose-window | ❌ |
+| `C-b !` | break-pane | ❌ |
+| `C-b #` | list-buffers | ❌ |
+| `C-b '` | select window by index prompt | ❌ |
+| `C-b (` / `C-b )` | switch-client prev/next | ❌ |
+| `C-b -` | delete-buffer | ❌ |
+| `C-b .` | move-window prompt | ❌ |
+| `C-b =` | choose-buffer | ❌ |
+| `C-b C-o` | rotate-window | ❌ |
+| `C-b C-z` | suspend-client | ❌ |
+| `C-b D` | choose-client | ❌ |
+| `C-b L` | switch-client -l | ❌ |
+| `C-b M-1` ~ `M-5` | select-layout presets | ❌ |
+| `C-b f` | find-window | ❌ |
+| `C-b i` | display-message (window info) | ❌ |
+| `C-b m` / `C-b M` | mark/unmark pane | ❌ |
+| `C-b q` | display-panes | ❌ |
+| `C-b r` | refresh-client | ❌ |
+| `C-b s` | choose-tree (session picker) | ❌ |
+| `C-b ~` | show-messages | ❌ |
+
+### Copy Mode (vi mode)
+
+| Key | Action | Supported |
+|---|---|---|
+| `h/j/k/l` | Cursor movement | ✅ |
+| `0` / `$` | Start/end of line | ✅ |
+| `g` / `G` | Top/bottom of history | ✅ |
+| `C-u` / `C-d` | Half page up/down | ✅ |
+| `PgUp` / `PgDn` | Full page up/down | ✅ |
+| `Space` | Begin selection | ✅ |
+| `Enter` | Copy selection & exit | ✅ |
+| `/` / `?` | Search forward/backward | ✅ |
+| `n` / `N` | Next/previous search result | ✅ |
+| `q` / `Escape` | Exit copy mode | ✅ |
+| `w` / `b` / `e` | Word movement | ❌ |
+| `W` / `B` / `E` | WORD movement | ❌ |
+| `f` / `F` / `t` / `T` | Character jump | ❌ |
+| `;` / `,` | Repeat jump | ❌ |
+| `{` / `}` | Paragraph movement | ❌ |
+| `H` / `M` / `L` | Screen top/middle/bottom | ❌ |
+| `^` | First non-blank character | ❌ |
+| `v` | Rectangle toggle | ❌ |
+| `V` | Select line | ❌ |
+| `o` | Other end of selection | ❌ |
+| `D` | Copy to end of line | ❌ |
+| `A` | Append to selection | ❌ |
+
+### Missing Options
+
+wtmux supports ~16 options (see [Available Options](#available-options)). Notable tmux options **not yet supported** include:
+
+- `mode-keys` — vi/emacs mode selection
+- `pane-base-index`
+- `set-titles` / `set-titles-string`
+- `visual-activity` / `visual-bell` / `visual-silence`
+- `monitor-activity` / `monitor-bell` / `monitor-silence`
+- `remain-on-exit`
+- `synchronize-panes`
+- `aggressive-resize`
+- `window-style` / `window-active-style`
+- `allow-rename` / `allow-passthrough`
+- `focus-events`
+- `set-clipboard`
+- `word-separators`
+- `wrap-search`
+- `@user-options` — User-defined options
+
+### Missing Feature Categories
+
+| Feature Area | Status | Impact |
+|---|---|---|
+| **Scripting/Automation** (`send-keys`, `run-shell`, `if-shell`) | Not supported | tmux scripts incompatible |
+| **Hooks** (`after-*`, `before-*` events) | Not supported | Automation workflows unavailable |
+| **Format variables** (`#{}`) | Very limited | Only `session_name` and time; tmux has 100+ |
+| **Target specification** (`session:window.pane`) | Limited | Complex targeting unavailable |
+| **Multiple key tables** (`-T` prefix/root/copy-mode etc.) | Not supported | Only prefix/default tables exist |
+| **Interactive UI** (`choose-tree`, `choose-buffer`) | Not supported | No session/buffer picker UI |
+| **Popup windows** (`display-popup`) | Not supported | |
+| **Pane linking/moving** | Not supported | Cannot move panes across sessions |
+| **Emacs copy mode** | Not supported | Only partial vi mode |
+| **Environment variable management** | Not supported | |
+
+### Summary
+
+wtmux covers the **core daily workflow** well — session create/attach/detach, pane splitting, window switching, basic copy mode, and configuration. However, it does not yet match tmux's full feature set. Advanced features like scripting (`send-keys`, `run-shell`), hooks, interactive UIs (`choose-tree`), and extensive format variables are not implemented. Existing tmux automation scripts (complex `.tmux.conf`, tmuxinator, tmux-resurrect, etc.) are not compatible.
+
 ## Architecture
 
 ```
