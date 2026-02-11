@@ -1,5 +1,7 @@
 # wtmux
 
+> **Built with Claude Opus 4.6** — The entire codebase (~6,000 lines of Rust across 7 crates) was converted from tmux's C source using approximately 1M tokens via Claude Opus 4.6. Architecture design, code generation, debugging, and iteration were all done through AI-assisted development.
+
 A Windows-native terminal multiplexer — [tmux](https://github.com/tmux/tmux) rewritten in Rust. The core concepts, key bindings, and command interface are ported from tmux, rebuilt entirely on Windows APIs (ConPTY, Named Pipes) — no WSL, no Cygwin required.
 
 ```
